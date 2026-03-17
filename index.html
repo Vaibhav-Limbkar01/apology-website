@@ -904,5 +904,15 @@
             }
         }
     </script>
+
+    <script>
+    // Auto-play audio when user clicks anywhere
+    document.addEventListener('click', function() {
+        const audio = document.getElementById('backgroundMusic');
+        if (audio.paused) {
+            audio.play();
+        }
+    });
+</script>
 </body>
 </html>
