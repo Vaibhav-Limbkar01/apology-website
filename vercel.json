@@ -1,0 +1,5 @@
+{
+  "buildCommand": "",
+  "outputDirectory": "public",
+  "devCommand": "python -m http.server 3000"
+}
