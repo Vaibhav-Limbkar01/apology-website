@@ -22,9 +22,15 @@
             --body-font: 'Harlow Solid Italic', cursive;
         }
 
-        body {
+        html, body {
             font-family: var(--body-font);
             overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            overflow-y: auto;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -226,6 +232,16 @@
                 grid-template-columns: 1fr;
                 gap: 30px;
             }
+
+            .home-page::before {
+                width: 200px;
+                height: 200px;
+            }
+
+            .home-page::after {
+                width: 250px;
+                height: 250px;
+            }
         }
 
         .collage-container {
@@ -234,6 +250,12 @@
             perspective: 1000px;
             width: 100%;
             max-width: 500px;
+        }
+
+        @media (max-width: 600px) {
+            .collage-container {
+                height: 300px;
+            }
         }
 
         .photo-frame {
@@ -303,6 +325,50 @@
             animation-delay: 2.5s;
         }
 
+        @media (max-width: 600px) {
+            .photo-frame-1 {
+                width: 80px;
+                height: 80px;
+                top: 20%;
+                left: 5%;
+            }
+
+            .photo-frame-2 {
+                width: 100px;
+                height: 100px;
+                top: 10%;
+                left: 30%;
+            }
+
+            .photo-frame-3 {
+                width: 90px;
+                height: 90px;
+                top: 25%;
+                right: 5%;
+            }
+
+            .photo-frame-4 {
+                width: 80px;
+                height: 80px;
+                bottom: 25%;
+                left: 8%;
+            }
+
+            .photo-frame-5 {
+                width: 90px;
+                height: 90px;
+                bottom: 15%;
+                left: 35%;
+            }
+
+            .photo-frame-6 {
+                width: 100px;
+                height: 100px;
+                bottom: 20%;
+                right: 5%;
+            }
+        }
+
         .photo-frame svg {
             width: 50%;
             height: 50%;
@@ -330,7 +396,13 @@
 
         @media (max-width: 600px) {
             .apology-flashcard {
-                padding: 30px 25px;
+                padding: 25px 20px;
+                border-radius: 20px;
+            }
+
+            .apology-flashcard:hover {
+                transform: perspective(1000px) rotateY(0deg) translateY(0px);
+                box-shadow: 0 30px 60px rgba(236, 72, 153, 0.2);
             }
         }
 
@@ -346,6 +418,12 @@
             margin-bottom: 20px;
             text-align: center;
             letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .apology-flashcard h1 {
+                font-size: 1.8rem;
+            }
         }
 
         .apology-flashcard .divider {
@@ -365,6 +443,13 @@
             letter-spacing: 0.3px;
             text-align: center;
             font-family: var(--body-font);
+        }
+
+        @media (max-width: 600px) {
+            .apology-flashcard p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
         }
 
         .flashcard-button-container {
@@ -391,6 +476,13 @@
         .continue-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 15px 35px rgba(236, 72, 153, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .continue-btn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
         }
 
         .continue-btn svg {
@@ -434,6 +526,22 @@
             animation: pulse 4s ease-in-out infinite 2s;
         }
 
+        @media (max-width: 600px) {
+            .apology-page::before {
+                width: 250px;
+                height: 250px;
+                top: 10%;
+                left: 5%;
+            }
+
+            .apology-page::after {
+                width: 250px;
+                height: 250px;
+                bottom: 10%;
+                right: 5%;
+            }
+        }
+
         .back-btn {
             position: absolute;
             top: 30px;
@@ -458,6 +566,14 @@
             transform: translateX(-5px);
         }
 
+        @media (max-width: 600px) {
+            .back-btn {
+                top: 15px;
+                left: 15px;
+                font-size: 0.9rem;
+            }
+        }
+
         .apology-container {
             max-width: 700px;
             width: 100%;
@@ -476,7 +592,8 @@
 
         @media (max-width: 600px) {
             .question-box {
-                padding: 30px;
+                padding: 25px 20px;
+                border-radius: 20px;
             }
         }
 
@@ -509,7 +626,9 @@
 
         @media (max-width: 600px) {
             .question-text {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
+                min-height: auto;
+                margin-bottom: 30px;
             }
         }
 
@@ -526,6 +645,7 @@
             .buttons-container {
                 flex-direction: column;
                 gap: 20px;
+                min-height: auto;
             }
         }
 
@@ -540,6 +660,13 @@
             transition: all 0.3s ease;
             white-space: nowrap;
             font-family: var(--body-font);
+        }
+
+        @media (max-width: 600px) {
+            .yes-btn, .no-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
         }
 
         .yes-btn {
@@ -596,6 +723,14 @@
             animation: bounce 1s ease-in-out infinite;
         }
 
+        @media (max-width: 600px) {
+            .celebration-heart {
+                width: 80px;
+                height: 80px;
+                margin: 0 auto 20px;
+            }
+        }
+
         .celebration-content h1 {
             font-size: 3.5rem;
             font-weight: 900;
@@ -605,6 +740,12 @@
             background-clip: text;
             margin-bottom: 20px;
             font-family: var(--body-font);
+        }
+
+        @media (max-width: 600px) {
+            .celebration-content h1 {
+                font-size: 2rem;
+            }
         }
 
         .celebration-content p {
@@ -619,12 +760,26 @@
             font-family: var(--body-font);
         }
 
+        @media (max-width: 600px) {
+            .celebration-content p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        }
+
         .celebration-buttons {
             display: flex;
             flex-direction: column;
             gap: 15px;
             max-width: 400px;
             margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .celebration-buttons {
+                max-width: 100%;
+                gap: 12px;
+            }
         }
 
         .celebration-buttons button {
@@ -637,6 +792,13 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             font-family: var(--body-font);
+        }
+
+        @media (max-width: 600px) {
+            .celebration-buttons button {
+                padding: 12px 25px;
+                font-size: 0.95rem;
+            }
         }
 
         .go-home-btn {
@@ -661,14 +823,24 @@
             transform: scale(1.05);
             box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
         }
+
+        /* Touch friendly adjustments */
+        @media (max-width: 600px) {
+            .music-control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+                top: 15px;
+                right: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Hidden Audio Element -->
-    <audio id="backgroundMusic" loop volume="0.5" crossorigin="anonymous">
-        <!-- Local audio file - place your song file in the same directory as this HTML file -->
-        <!-- Supported formats: .mp3, .wav, .ogg -->
+    <!-- Hidden Audio Element - IMPROVED FOR MOBILE -->
+    <audio id="backgroundMusic" loop crossorigin="anonymous" preload="auto">
         <source src="./song1.mp3" type="audio/mpeg">
+        <source src="./song1.ogg" type="audio/ogg">
         Your browser does not support the audio element.
     </audio>
 
@@ -676,7 +848,7 @@
     <div class="flower-shower" id="flowerShower"></div>
 
     <!-- MUSIC CONTROL BUTTON -->
-    <button class="music-control-btn" id="musicControlBtn" title="Mute Music" onclick="toggleMusic()">
+    <button class="music-control-btn" id="musicControlBtn" title="Click to play/mute music">
         🔊
     </button>
 
@@ -687,22 +859,22 @@
                 <!-- Photo Collage -->
                 <div class="collage-container">
                     <div class="photo-frame photo-frame-1">
-                        <img src=".\image 1.jpeg" alt="Memory 1" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="./image1.jpeg" alt="Memory 1" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="photo-frame photo-frame-2">
-                        <img src=".\image 2.jpeg" alt="Memory 2" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="./image2.jpeg" alt="Memory 2" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="photo-frame photo-frame-3">
-                        <img src=".\image 3.jpeg" alt="Memory 3" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="./image3.jpeg" alt="Memory 3" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="photo-frame photo-frame-4">
-                        <img src=".\image 4.jpeg" alt="Memory 4" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="./image4.jpeg" alt="Memory 4" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="photo-frame photo-frame-5">
-                        <img src=".\image 5.jpeg" alt="Memory 5" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="./image5.jpeg" alt="Memory 5" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="photo-frame photo-frame-6"> 
-                         <img src=".\image 6.jpeg" alt="Memory 6" style="width: 100%; height: 100%; object-fit: cover;">
+                         <img src="./image6.jpeg" alt="Memory 6" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
 
@@ -740,7 +912,7 @@
 
                 <div class="buttons-container">
                     <button class="yes-btn" onclick="celebrate()">Yes 💚</button>
-                    <button class="no-btn" id="noBtn" onmouseover="moveNoButton()">No ❌</button>
+                    <button class="no-btn" id="noBtn" onmouseover="moveNoButton()" ontouchstart="moveNoButton()">No ❌</button>
                 </div>
 
             </div>
@@ -786,30 +958,52 @@
         const backgroundMusic = document.getElementById('backgroundMusic');
         const musicControlBtn = document.getElementById('musicControlBtn');
         let isMuted = false;
+        let audioStarted = false;
 
         let flowerIntervalId = null;
 
-        // Play music on load
+        // Enhanced audio handling for mobile
+        function playAudio() {
+            if (!audioStarted) {
+                backgroundMusic.volume = 0.7;
+                const playPromise = backgroundMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        audioStarted = true;
+                        console.log('Audio started successfully');
+                    }).catch(error => {
+                        console.log('Autoplay prevented:', error);
+                    });
+                }
+            }
+        }
+
+        // Start audio on page load
         window.addEventListener('load', () => {
             flowerIntervalId = createFlowerShower();
-            // Try to autoplay music
-            backgroundMusic.play().catch(err => console.log('Autoplay prevented:', err));
+            playAudio();
         });
 
+        // Try to play audio on any user interaction
+        document.addEventListener('click', playAudio);
+        document.addEventListener('touchstart', playAudio);
+
         function toggleMusic() {
-            isMuted = !isMuted;
-            backgroundMusic.muted = isMuted;
-            musicControlBtn.textContent = isMuted ? '🔇' : '🔊';
-            musicControlBtn.classList.toggle('muted', isMuted);
+            if (!audioStarted) {
+                playAudio();
+            } else {
+                isMuted = !isMuted;
+                backgroundMusic.muted = isMuted;
+                musicControlBtn.textContent = isMuted ? '🔇' : '🔊';
+                musicControlBtn.classList.toggle('muted', isMuted);
+            }
         }
 
         function createFlowerShower() {
             const flowers = ['🌸', '🌹', '🌷'];
             const flowerShower = document.getElementById('flowerShower');
 
-            // Create flowers continuously - much smoother
             const flowerInterval = setInterval(() => {
-                // Create 2-3 flowers at once for smoother cascade
                 const flowerCount = 2 + Math.floor(Math.random() * 2);
                 for (let i = 0; i < flowerCount; i++) {
                     setTimeout(() => {
@@ -825,11 +1019,10 @@
                         
                         flowerShower.appendChild(flower);
 
-                        // Remove flower after animation completes
                         setTimeout(() => flower.remove(), duration * 1000);
                     }, i * 20);
                 }
-            }, 80); // Create flowers every 80ms for very smooth flow
+            }, 80);
 
             return flowerInterval;
         }
@@ -840,7 +1033,6 @@
             });
             document.getElementById(pageId).classList.add('active');
 
-            // Stop flower shower on other pages, continue on home
             if (pageId === 'homePage' && !flowerIntervalId) {
                 flowerIntervalId = createFlowerShower();
             } else if (pageId !== 'homePage' && flowerIntervalId) {
@@ -862,8 +1054,8 @@
         }
 
         function moveNoButton() {
-            const randomX = (Math.random() - 0.5) * 200;
-            const randomY = (Math.random() - 0.5) * 200;
+            const randomX = (Math.random() - 0.5) * 150;
+            const randomY = (Math.random() - 0.5) * 150;
             
             noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
             
@@ -884,7 +1076,6 @@
         }
 
         function openGoogleForm() {
-            // Replace with your Google Form URL
             window.open('https://forms.gle/T9T26EHDAgY2HCLJ6', '_blank');
         }
 
@@ -904,15 +1095,5 @@
             }
         }
     </script>
-
-    <script>
-    // Auto-play audio when user clicks anywhere
-    document.addEventListener('click', function() {
-        const audio = document.getElementById('backgroundMusic');
-        if (audio.paused) {
-            audio.play();
-        }
-    });
-</script>
 </body>
 </html>
