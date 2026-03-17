@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm Sorry - A Special Apology</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Harlow+Solid+Italic&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #c084fc 100%);
+            --secondary-gradient: linear-gradient(135deg, #fed7aa 0%, #fbcfe8 100%);
+            --success-gradient: linear-gradient(135deg, #86efac 0%, #4ade80 100%);
+            --danger-gradient: linear-gradient(135deg, #f87171 0%, #f43f5e 100%);
+            --body-font: 'Harlow Solid Italic', cursive;
+        }
+
+        body {
+            font-family: var(--body-font);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--body-font);
+            font-weight: 900;
+            font-style: italic;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes flowerFall {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .flower-shower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .flower {
+            position: absolute;
+            animation: flowerFall cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .flower-icon {
+            font-size: 2rem;
+            display: inline-block;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* Music Control Button */
+        .music-control-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #f472b6;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .music-control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.3);
+        }
+
+        .music-control-btn.muted {
+            border-color: #ef4444;
+        }
+
+        /* ===== HOME PAGE ===== */
+        .home-page {
+            background: linear-gradient(135deg, #fce7f3 0%, #fdf2f8 50%, #f3e8ff 100%);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-page::before,
+        .home-page::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            blur: 100px;
+            filter: blur(100px);
+            animation: pulse 4s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .home-page::before {
+            width: 400px;
+            height: 400px;
+            background: #c084fc;
+            top: 10%;
+            left: 10%;
+        }
+
+        .home-page::after {
+            width: 500px;
+            height: 500px;
+            background: #f472b6;
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .home-container {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            align-items: center;
+            justify-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .home-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .collage-container {
+            position: relative;
+            height: 400px;
+            perspective: 1000px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .photo-frame {
+            position: absolute;
+            background: linear-gradient(135deg, #e9d5ff 0%, #fbcfe8 100%);
+            border-radius: 20px;
+            border: 5px solid white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .photo-frame-1 {
+            width: 120px;
+            height: 120px;
+            top: 10%;
+            left: 5%;
+            transform: rotate(-3deg);
+            animation-delay: 0s;
+        }
+
+        .photo-frame-2 {
+            width: 150px;
+            height: 150px;
+            top: 5%;
+            left: 35%;
+            transform: rotate(2deg);
+            animation-delay: 0.5s;
+        }
+
+        .photo-frame-3 {
+            width: 140px;
+            height: 140px;
+            top: 15%;
+            right: 5%;
+            transform: rotate(-2deg);
+            animation-delay: 1s;
+        }
+
+        .photo-frame-4 {
+            width: 120px;
+            height: 120px;
+            bottom: 15%;
+            left: 10%;
+            transform: rotate(3deg);
+            animation-delay: 1.5s;
+        }
+
+        .photo-frame-5 {
+            width: 140px;
+            height: 140px;
+            bottom: 10%;
+            left: 40%;
+            transform: rotate(-1deg);
+            animation-delay: 2s;
+        }
+
+        .photo-frame-6 {
+            width: 150px;
+            height: 150px;
+            bottom: 15%;
+            right: 5%;
+            transform: rotate(2deg);
+            animation-delay: 2.5s;
+        }
+
+        .photo-frame svg {
+            width: 50%;
+            height: 50%;
+            color: #f472b6;
+            opacity: 0.4;
+        }
+
+        .apology-flashcard {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 30px 80px rgba(236, 72, 153, 0.2);
+            border: 3px solid rgba(236, 72, 153, 0.1);
+            max-width: 600px;
+            width: 100%;
+            animation: slideIn 0.8s ease-out;
+            transform: perspective(1000px) rotateX(0deg);
+            transition: all 0.3s ease;
+        }
+
+        .apology-flashcard:hover {
+            box-shadow: 0 40px 100px rgba(236, 72, 153, 0.3);
+            transform: perspective(1000px) rotateY(2deg) translateY(-5px);
+        }
+
+        @media (max-width: 600px) {
+            .apology-flashcard {
+                padding: 30px 25px;
+            }
+        }
+
+        .apology-flashcard h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-style: italic;
+            font-family: var(--body-font);
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .apology-flashcard .divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #f472b6 0%, #ec4899 100%);
+            border-radius: 10px;
+            margin: 0 auto 30px;
+        }
+
+        .apology-flashcard p {
+            font-size: 1rem;
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+            text-align: center;
+            font-family: var(--body-font);
+        }
+
+        .flashcard-button-container {
+            text-align: center;
+        }
+
+        .continue-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(236, 72, 153, 0.4);
+        }
+
+        .continue-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .continue-btn:hover svg {
+            transform: translateX(5px);
+        }
+
+        /* ===== APOLOGY PAGE ===== */
+        .apology-page {
+            background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 50%, #fce7f3 100%);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .apology-page::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.1) 0%, transparent 100%);
+            top: 20%;
+            left: 10%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .apology-page::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(192, 132, 252, 0.1) 0%, transparent 100%);
+            bottom: 20%;
+            right: 10%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite 2s;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            color: #a855f7;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--body-font);
+        }
+
+        .back-btn:hover {
+            color: #7e22ce;
+            transform: translateX(-5px);
+        }
+
+        .apology-container {
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+            z-index: 3;
+        }
+
+        .question-box {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(168, 85, 247, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .question-box {
+                padding: 30px;
+            }
+        }
+
+        .heart-icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .heart-icon svg {
+            width: 40px;
+            height: 40px;
+            color: #f472b6;
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+
+        .question-text {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+            min-height: 100px;
+            animation: fadeInUp 0.5s ease-out;
+            font-family: var(--body-font);
+        }
+
+        @media (max-width: 600px) {
+            .question-text {
+                font-size: 1.8rem;
+            }
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            min-height: 60px;
+            position: relative;
+        }
+
+        @media (max-width: 600px) {
+            .buttons-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        .yes-btn, .no-btn {
+            padding: 18px 40px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-family: var(--body-font);
+        }
+
+        .yes-btn {
+            background: var(--success-gradient);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(52, 211, 153, 0.3);
+        }
+
+        .no-btn {
+            background: var(--danger-gradient);
+            color: white;
+            position: absolute;
+        }
+
+        .no-btn:hover {
+            box-shadow: 0 15px 40px rgba(244, 63, 94, 0.3);
+        }
+
+        /* ===== CELEBRATION PAGE ===== */
+        .celebration-page {
+            background: linear-gradient(135deg, #dcfce7 0%, #d1fae5 50%, #c6f6d5 100%);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: confetti 3s ease-in forwards;
+        }
+
+        .celebration-content {
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .celebration-heart {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            color: #f43f5e;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .celebration-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            font-family: var(--body-font);
+        }
+
+        .celebration-content p {
+            font-size: 1.3rem;
+            color: #374151;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            font-family: var(--body-font);
+        }
+
+        .celebration-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .celebration-buttons button {
+            padding: 15px 35px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-family: var(--body-font);
+        }
+
+        .go-home-btn {
+            background: white;
+            color: #059669;
+            font-weight: 700;
+            border: 3px solid #86efac;
+        }
+
+        .go-home-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .google-form-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            font-weight: 700;
+        }
+
+        .google-form-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden Audio Element -->
+    <audio id="backgroundMusic" loop volume="0.5" crossorigin="anonymous">
+        <!-- Local audio file - place your song file in the same directory as this HTML file -->
+        <!-- Supported formats: .mp3, .wav, .ogg -->
+        <source src="./song1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- FLOWER SHOWER -->
+    <div class="flower-shower" id="flowerShower"></div>
+
+    <!-- MUSIC CONTROL BUTTON -->
+    <button class="music-control-btn" id="musicControlBtn" title="Mute Music" onclick="toggleMusic()">
+        🔊
+    </button>
+
+    <!-- HOME PAGE -->
+    <div class="page active home-page" id="homePage">
+        <div class="home-container">
+            <div class="home-grid">
+                <!-- Photo Collage -->
+                <div class="collage-container">
+                    <div class="photo-frame photo-frame-1">
+                        <img src=".\d\image 1.jpeg" alt="Memory 1" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-frame photo-frame-2">
+                        <img src=".\d\image 2.jpeg" alt="Memory 2" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-frame photo-frame-3">
+                        <img src=".\d\image 3.jpeg" alt="Memory 3" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-frame photo-frame-4">
+                        <img src=".\d\image 4.jpeg" alt="Memory 4" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-frame photo-frame-5">
+                        <img src=".\d\image 5.jpeg" alt="Memory 5" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="photo-frame photo-frame-6"> 
+                         <img src=".\d\image 6.jpeg" alt="Memory 6" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+
+                <!-- Apology Flashcard -->
+                <div class="apology-flashcard">
+                    <h1>I'm Sorry</h1>
+                    <div class="divider"></div>
+                    <p>My dearest friend, I need to start by saying I'm truly sorry. There's no excuse for what happened, and I've been reflecting deeply on my actions. To me you are special, and the thought of having hurt you is something I can't bear. I realize now how thoughtless I was, and I can only imagine how you must have felt. You've always been there for me through thick and thin, and when you needed me the most, I let you down. That's not who I want to be, and it's not the kind of friend you deserve. I want you to know that I'm committed to doing better. I've learned so much from this, and I promise to be more mindful, more present, and more considerate of your feelings going forward. Our friendship is one of the most precious things in my life, and I'm willing to do whatever it takes to rebuild your trust. I hope you can find it in your heart to forgive me. I miss having you in my life, and I miss being the friend you deserve. Thank you for giving me the chance to apologize, and I truly hope we can move forward together. With all my love and deepest apologies, Your Best Friend</p>
+                    <div class="flashcard-button-container">
+                        <button class="continue-btn" onclick="goToApology()">
+                            Continue to Next
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- APOLOGY QUESTION PAGE -->
+    <div class="page apology-page" id="apologyPage">
+        <button class="back-btn" onclick="goHome()">← Back</button>
+        
+        <div class="apology-container">
+            <div class="question-box">
+                <div class="heart-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </div>
+
+                <div class="question-text" id="questionText">Will you forgive me?</div>
+
+                <div class="buttons-container">
+                    <button class="yes-btn" onclick="celebrate()">Yes 💚</button>
+                    <button class="no-btn" id="noBtn" onmouseover="moveNoButton()">No ❌</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CELEBRATION PAGE -->
+    <div class="page celebration-page" id="celebrationPage">
+        <div class="celebration-content">
+            <svg class="celebration-heart" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <h1>You're Amazing! 🎉</h1>
+            <p>Thank you so much for forgiving me. Your friendship means everything to me, and I promise to be a better friend. Let's create more beautiful memories together! 💚</p>
+            <div class="celebration-buttons">
+                <button class="go-home-btn" onclick="goHome()">Go Home 🏠</button>
+                <button class="google-form-btn" onclick="openGoogleForm()">Share Your Feelings 💌</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            "Will you forgive me?",
+            "Do you accept my apology?",
+            "Can we still be best friends?",
+            "Will you give me a chance to make it right?",
+            "Do you believe I'm truly sorry?",
+            "Can you find it in your heart to forgive me?",
+            "Will you let me prove myself to you?",
+            "Do you think we can move past this?",
+            "Will you hear me out?",
+            "Can we start fresh?",
+            "Do you still care about our friendship?",
+            "Will you let me make it up to you?",
+            "Can you see the sincerity in my words?",
+            "Will you give me another chance?",
+            "Do you know how much you mean to me?"
+        ];
+
+        let currentQuestion = 0;
+        const noBtn = document.getElementById('noBtn');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const musicControlBtn = document.getElementById('musicControlBtn');
+        let isMuted = false;
+
+        let flowerIntervalId = null;
+
+        // Play music on load
+        window.addEventListener('load', () => {
+            flowerIntervalId = createFlowerShower();
+            // Try to autoplay music
+            backgroundMusic.play().catch(err => console.log('Autoplay prevented:', err));
+        });
+
+        function toggleMusic() {
+            isMuted = !isMuted;
+            backgroundMusic.muted = isMuted;
+            musicControlBtn.textContent = isMuted ? '🔇' : '🔊';
+            musicControlBtn.classList.toggle('muted', isMuted);
+        }
+
+        function createFlowerShower() {
+            const flowers = ['🌸', '🌹', '🌷'];
+            const flowerShower = document.getElementById('flowerShower');
+
+            // Create flowers continuously - much smoother
+            const flowerInterval = setInterval(() => {
+                // Create 2-3 flowers at once for smoother cascade
+                const flowerCount = 2 + Math.floor(Math.random() * 2);
+                for (let i = 0; i < flowerCount; i++) {
+                    setTimeout(() => {
+                        const flower = document.createElement('div');
+                        flower.className = 'flower';
+                        flower.innerHTML = '<div class="flower-icon">' + flowers[Math.floor(Math.random() * flowers.length)] + '</div>';
+                        
+                        const leftPos = Math.random() * 100;
+                        const duration = 6 + Math.random() * 2;
+                        
+                        flower.style.left = leftPos + '%';
+                        flower.style.animationDuration = duration + 's';
+                        
+                        flowerShower.appendChild(flower);
+
+                        // Remove flower after animation completes
+                        setTimeout(() => flower.remove(), duration * 1000);
+                    }, i * 20);
+                }
+            }, 80); // Create flowers every 80ms for very smooth flow
+
+            return flowerInterval;
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+
+            // Stop flower shower on other pages, continue on home
+            if (pageId === 'homePage' && !flowerIntervalId) {
+                flowerIntervalId = createFlowerShower();
+            } else if (pageId !== 'homePage' && flowerIntervalId) {
+                clearInterval(flowerIntervalId);
+                flowerIntervalId = null;
+                document.getElementById('flowerShower').innerHTML = '';
+            }
+        }
+
+        function goHome() {
+            currentQuestion = 0;
+            showPage('homePage');
+        }
+
+        function goToApology() {
+            currentQuestion = 0;
+            updateQuestion();
+            showPage('apologyPage');
+        }
+
+        function moveNoButton() {
+            const randomX = (Math.random() - 0.5) * 200;
+            const randomY = (Math.random() - 0.5) * 200;
+            
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            
+            currentQuestion = (currentQuestion + 1) % questions.length;
+            updateQuestion();
+        }
+
+        function updateQuestion() {
+            const questionText = document.getElementById('questionText');
+            questionText.textContent = questions[currentQuestion];
+        }
+
+        function celebrate() {
+            createConfetti();
+            setTimeout(() => {
+                showPage('celebrationPage');
+            }, 300);
+        }
+
+        function openGoogleForm() {
+            // Replace with your Google Form URL
+            window.open('https://forms.gle/EVBV1pvk5M89sRAYA', '_blank');
+        }
+
+        function createConfetti() {
+            const colors = ['#f472b6', '#ec4899', '#db2777', '#be185d', '#831843', '#c084fc', '#86efac'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `confetti ${2 + Math.random() * 2}s ease-in forwards`;
+                confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                document.body.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
